@@ -61,4 +61,65 @@ CMD ["app.py"]
 
 This sets 'python3' as the entry point & 'app.py' as the default argument.
 
-#Docker #Dockerfile #Containerization
+Part 2 : 
+
+1️⃣ ADD: Similar to COPY, but with added features. It can handle URLs and automatically unpack archives. Example:
+
+ADD https://example[dot]com/app.tar.gz /app/
+
+This fetches 'app.tar.gz' from the web and unpacks it into '/app/'.
+
+2️⃣ VOLUME: Creates a mount point for external volumes. Used to share data between the host and container. Example:
+
+VOLUME /data
+
+This creates a volume named '/data' where data can be persisted outside the container.
+
+3️⃣ USER: Specifies the user to use when running the container. Helps improve security by avoiding running as root. Example:
+
+USER appuser
+
+This sets the user to 'appuser' in the container.
+
+4️⃣ LABEL: Adds metadata to the image in key-value format. Useful for versioning and documenting the image. Example:
+
+LABEL version="1.0" maintainer="John Doe"
+
+This adds version and maintainer labels to the image.
+
+5️⃣ ARG: Similar to ENV, but used during build time only. It doesn't persist in the final image. Example:
+
+ARG BUILD_ENV=production
+
+This sets the 'BUILD_ENV' argument with a default value of 'production'.
+
+6️⃣ ONBUILD: Triggers instructions to be executed when this image is used as a base for another image. Example:
+
+ONBUILD COPY . /app
+
+This copies the current directory's content into '/app' when this image is used as a base.
+
+7️⃣ STOPSIGNAL: Sets the system call signal that will be sent to the container to stop it gracefully. Example:
+
+STOPSIGNAL SIGINT
+
+This sets the SIGINT signal as the stop signal.
+
+8️⃣ HEALTHCHECK: Defines a command to check the container's health. Helps monitor the app's status. Example:
+
+HEALTHCHECK CMD curl -f http://localhost/ || exit 1
+
+This checks if 'http://localhost/' is reachable, failing if it's not.
+
+9️⃣ SHELL: Overrides the default shell used by RUN, CMD, and ENTRYPOINT. Example:
+
+SHELL ["/bin/bash", "-c"]
+
+This sets '/bin/bash -c' as the shell for subsequent commands.
+
+🔟 .dockerignore: Not a parameter, but a crucial file. Works like .gitignore to exclude files from the image. Example:
+
+*.log
+node_modules/
+
+This ignores log files and the 'node_modules' directory during the build.
